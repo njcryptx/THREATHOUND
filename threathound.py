@@ -2,14 +2,13 @@ import os
 import json
 import smtplib
 import requests
-import trackpath
 import tkinter as tk
 from tkinter import filedialog, scrolledtext
 import platform
 import pandas as pd
 import scapy.all as scapy
 from sklearn.ensemble import IsolationForest
-
+from trackpath import track_changes 
 def display_banner():
     banner = """
 '########:'##::::'##:'########::'########::::'###::::'########:'##::::'##::'#######::'##::::'##:'##::: ##:'########:: 
@@ -87,6 +86,22 @@ def block_ip(ip):
     else:
         print(f"Unsupported platform: {system_platform}. Could not block IP.")
 
+def monitor_auth_log():
+    directory_to_monitor = "auth.log"
+    while True:
+        change = track_changes(directory_to_monitor)
+        if change:
+            event_type = change["type"]
+            event_path = change["path"]
+            print(f"Detected {event_type} at {event_path}")
+            logs = read_auth_logs(directory_to_monitor)
+            ip_addresses = extract_ip_addresses(logs)
+            print(f"Extracted IPs: {ip_addresses}")
+            sniffed_packets = sniff_packets()
+            anomalies = detect_anomalies(sniffed_packets + [(ip, None) for ip in ip_addresses])
+            if anomalies:
+                print("Suspicious activity detected!")
+
 def browse_file():
     file_path = filedialog.askopenfilename(title="Select Log File", filetypes=[("Log Files", "*.log"), ("All Files", "*.*")])
     if file_path:
@@ -130,4 +145,5 @@ start_button = tk.Button(root, text="Start Analysis", command=run_analysis)
 start_button.pack()
 output_text = scrolledtext.ScrolledText(root, width=70, height=20)
 output_text.pack()
+root.after(1000, monitor_auth_log)  
 root.mainloop()
