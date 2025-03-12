@@ -1,5 +1,0 @@
-scapy
-pandas
-sklearn
-requests
-tk
