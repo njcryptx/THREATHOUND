@@ -1,3 +1,4 @@
+<!--
 # ThreatHound - Advanced Cybersecurity Analyzer
 
 ## 🔥 Overview
@@ -105,4 +106,4 @@ Feel free to **fork** this repository, improve the tool, and submit pull request
 
 ---
 👨‍💻 Created by **njcryptx** 🚀
-
+-->
