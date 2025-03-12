@@ -1,5 +1,5 @@
 scapy
 pandas
-sklearn
+scikit-learn
 requests
 tk
