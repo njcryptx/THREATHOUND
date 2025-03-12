@@ -2,8 +2,9 @@ import os
 import json
 import smtplib
 import requests
+import trackpath
 import tkinter as tk
-from tkinter import scrolledtext
+from tkinter import filedialog, scrolledtext
 import platform
 import pandas as pd
 import scapy.all as scapy
@@ -11,14 +12,14 @@ from sklearn.ensemble import IsolationForest
 
 def display_banner():
     banner = """
-'########:'##::::'##:'########::'########::::'###::::'########:'##::::'##::'#######::'##::::'##:'##::: ##:'########::
-... ##..:: ##:::: ##: ##.... ##: ##.....::::'## ##:::... ##..:: ##:::: ##:'##.... ##: ##:::: ##: ###:: ##: ##.... ##:
-::: ##:::: ##:::: ##: ##:::: ##: ##::::::::'##:. ##::::: ##:::: ##:::: ##: ##:::: ##: ##:::: ##: ####: ##: ##:::: ##:
-::: ##:::: #########: ########:: ######:::'##:::. ##:::: ##:::: #########: ##:::: ##: ##:::: ##: ## ## ##: ##:::: ##:
-::: ##:::: ##.... ##: ##.. ##::: ##...:::: #########:::: ##:::: ##.... ##: ##:::: ##: ##:::: ##: ##. ####: ##:::: ##:
-::: ##:::: ##:::: ##: ##::. ##:: ##::::::: ##.... ##:::: ##:::: ##:::: ##: ##:::: ##: ##:::: ##: ##:. ###: ##:::: ##:
-::: ##:::: ##:::: ##: ##:::. ##: ########: ##:::: ##:::: ##:::: ##:::: ##:. #######::. #######:: ##::. ##: ########::
-:::..:::::..:::::..::..:::::..::........::..:::::..:::::..:::::..:::::..:::.......::::.......:::..::::..::........:::   
+'########:'##::::'##:'########::'########::::'###::::'########:'##::::'##::'#######::'##::::'##:'##::: ##:'########:: 
+... ##..:: ##:::: ##: ##.... ##: ##.....::::'## ##:::... ##..:: ##:::: ##:'##.... ##: ##:::: ##: ###:: ##: ##.... ##: 
+::: ##:::: ##:::: ##: ##:::: ##: ##::::::::'##:. ##::::: ##:::: ##:::: ##: ##:::: ##: ##:::: ##: ####: ##: ##:::: ##: 
+::: ##:::: #########: ########:: ######:::'##:::. ##:::: ##:::: #########: ##:::: ##: ##:::: ##: ## ## ##: ##:::: ##: 
+::: ##:::: ##.... ##: ##.. ##::: ##...:::: #########:::: ##:::: ##.... ##: ##:::: ##: ##:::: ##: ##. ####: ##:::: ##: 
+::: ##:::: ##:::: ##: ##::. ##:: ##::::::: ##.... ##:::: ##:::: ##:::: ##: ##:::: ##: ##:::: ##: ##:. ###: ##:::: ##: 
+::: ##:::: ##:::: ##: ##:::. ##: ########: ##:::: ##:::: ##:::: ##:::: ##:. #######::. #######:: ##::. ##: ########:: 
+:::..:::::..:::::..::..:::::..::........::..:::::..:::::..:::::..:::::..:::.......::::.......:::..::::..::........:::  
     ThreatHound - Cybersecurity Analyzer
     Created by: njcryptx
     """
@@ -69,7 +70,7 @@ def detect_anomalies(ip_list):
 def send_email_alert(message):
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
-    server.login("your_email@gmail.com", "password")
+    server.login("mrfidal@proton.me", "sha@!<two>W0w")
     server.sendmail("your_email@gmail.com", "receiver_email@gmail.com", message)
     server.quit()
 
@@ -85,6 +86,12 @@ def block_ip(ip):
         os.system(f"netsh advfirewall firewall add rule name=\"Block {ip}\" dir=in action=block remoteip={ip}")
     else:
         print(f"Unsupported platform: {system_platform}. Could not block IP.")
+
+def browse_file():
+    file_path = filedialog.askopenfilename(title="Select Log File", filetypes=[("Log Files", "*.log"), ("All Files", "*.*")])
+    if file_path:
+        log_entry.delete(0, tk.END)
+        log_entry.insert(0, file_path)
 
 def run_analysis():
     output_text.delete(1.0, tk.END)
@@ -107,13 +114,14 @@ def run_analysis():
     else:
         output_text.insert(tk.END, "[✅] No anomalies detected.\n")
 
-display_banner()
 root = tk.Tk()
 root.title("ThreatHound - Cybersecurity Analyzer")
 tk.Label(root, text="Enter Log File Path:").pack()
 log_entry = tk.Entry(root, width=50)
 log_entry.pack()
 log_entry.insert(0, "auth.log")
+browse_button = tk.Button(root, text="Browse...", command=browse_file)
+browse_button.pack()
 tk.Label(root, text="Enter Number of Packets to Capture:").pack()
 packet_entry = tk.Entry(root, width=10)
 packet_entry.pack()
