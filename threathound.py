@@ -4,6 +4,7 @@ import smtplib
 import requests
 import tkinter as tk
 from tkinter import scrolledtext
+import platform
 import pandas as pd
 import scapy.all as scapy
 from sklearn.ensemble import IsolationForest
@@ -77,7 +78,13 @@ def check_blacklist(ip):
     return response.status_code == 200
 
 def block_ip(ip):
-    os.system(f"sudo iptables -A INPUT -s {ip} -j DROP")
+    system_platform = platform.system()
+    if system_platform == "Linux":
+        os.system(f"sudo iptables -A INPUT -s {ip} -j DROP")
+    elif system_platform == "Windows":
+        os.system(f"netsh advfirewall firewall add rule name=\"Block {ip}\" dir=in action=block remoteip={ip}")
+    else:
+        print(f"Unsupported platform: {system_platform}. Could not block IP.")
 
 def run_analysis():
     output_text.delete(1.0, tk.END)
