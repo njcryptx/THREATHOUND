@@ -1,3 +1,7 @@
+ThreatHound is a powerful cybersecurity tool designed to assist researchers in analyzing authentication logs, monitoring network traffic, detecting anomalies, and mitigating security threats. With an interactive GUI, it provides a user-friendly interface for seamless security analysis and reporting.
+
+Please wait - this tool is not ready yet. Stay tuned for updates!
+
 <!--
 # ThreatHound - Advanced Cybersecurity Analyzer
 
