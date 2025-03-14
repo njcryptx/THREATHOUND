@@ -4,3 +4,4 @@ scikit-learn
 requests
 trackpath
 tk
+python-dotenv
