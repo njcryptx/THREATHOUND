@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>Styled File Upload</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-4">Upload File</h2>
+        <div class="relative mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2" for="file-upload">Choose a file</label>
+            <div class="flex items-center justify-center w-full">
+                <label class="flex flex-col items-center w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500" for="file-upload">
+                    <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-2"></i>
+                    <span class="text-gray-600">Click to upload</span>
+                    <input id="file-upload" type="file" class="hidden">
+                </label>
+            </div>
+        </div>
+        <button class="w-full bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            Submit
+        </button>
+    </div>
+</body>
+</html>
